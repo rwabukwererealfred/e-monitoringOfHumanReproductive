@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<div class="page-content">
+
+			<ui:include src="/WEB-INF/topbar.xhtml" />
+			<h:form>
+				<ul class="breadcrumb">
+					<li><a href="#">Home</a></li>
+					<li><a href="#">UI Kits</a></li>
+					<li class="active">UI Panels</li>
+				</ul>
+				<!-- END BREADCRUMB -->
+
+				<!-- PAGE TITLE -->
+				<div class="page-title">
+					<h3>
+						<span class="fa fa-arrow-circle-o-left"></span> Common Question List Form
+					</h3>
+				</div>
+			<div class="pull-right" >
+						<h:form>
+						<p:commandLink class="btn btn-danger">
+						<span class="fa fa-book"></span> Refresh
+						</p:commandLink>
+						</h:form>
+						
+					</div>
+				<div class="page-content-wrap">
+					<div class="row">
+					<ui:repeat var="one" value="#{listController.categories()}">
+						<div class="col-md-4" >
+
+							<!-- START PRIMARY PANEL -->
+							<div class="panel panel-primary">
+								<div class="panel-heading" style="background-color: black;">
+									<h3 class="panel-title" style="color: white;">#{one.message}</h3>
+								</div>
+								<div class="panel-body">
+								<p:scrollPanel style="height:150px; width:100%" mode="native">
+								<p:repeat var="desc" value="#{listController.descriptionList(one.id)}">
+									<p>#{desc.message} <p:commandLink>
+									<i class="fa fa-edit"></i>
+									<span>Edit</span>
+									</p:commandLink></p>
+									
+								</p:repeat>	
+								</p:scrollPanel>
+								</div>
+								<div class="panel-footer">
+									
+									<p:commandLink class="btn btn-primary pull-right">
+									<i class="fa fa-edit"></i>
+									<span>Edit Title</span>
+									</p:commandLink>
+								</div>
+							</div>
+
+						</div>
+						</ui:repeat>
+					
+					</div>
+				</div>
+			</h:form>
+
+		</div>
+	</ui:define>
+</ui:composition>

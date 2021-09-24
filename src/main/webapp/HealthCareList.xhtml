@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<div class="page-content">
+
+			<ui:include src="/WEB-INF/topbar.xhtml" />
+			<ul class="breadcrumb">
+				<li><a href="#">Home</a></li>
+				<li><a href="#">UI Kits</a></li>
+				<li class="active">UI Panels</li>
+			</ul>
+			<!-- PAGE TITLE -->
+
+			<div class="page-title">
+				<h3>
+					<span class="fa fa-arrow-circle-o-left"></span>Health Care
+					List Form
+				</h3>
+				
+			</div>
+
+			<div class="page-content-wrap">
+
+				<!-- START PANELS WITH CONTROLS -->
+				<div class="row">
+					<div class="col-md-10">
+						
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">Health Care List</h3>
+									<ul class="panel-controls">
+
+										<li><a href="#" class="panel-collapse"><span
+												class="fa fa-angle-down"></span></a></li>
+										<li><a href="#" class="panel-refresh"><span
+												class="fa fa-refresh"></span></a></li>
+
+									</ul>
+								</div>
+								<div class="panel-body">
+									<h:form id="form">
+								
+								
+								<table class="table datatable">
+									<thead>
+										<tr>
+										    <th>National Id</th>
+											<th>First Name</th>
+											<th>Last Name</th>
+											<th>Date Of Birth</th>
+											<th>Phone Number</th>
+											<th>Option</th>
+										</tr>
+									</thead>
+									<tbody>
+										<p:repeat var="one"
+											value="#{listController.healthCareList()}">
+											<tr>
+												<td>#{one.nationalId}</td>
+												<td>#{one.firstName}</td>
+												<td>#{one.lastName}</td>
+												<td>#{one.dateOfBirth}</td>
+												<td>#{one.phoneNumber}</td>
+												<td>
+												<h3><h:commandLink>
+												<span class="fa fa-edit"></span>
+												</h:commandLink>
+												<h:commandLink style="color:red">
+												<span class="fa fa-trash-o"></span>
+												</h:commandLink>
+												</h3>
+												
+												
+												</td>
+											</tr>
+										</p:repeat>
+
+
+									</tbody>
+								</table>
+								</h:form>
+								</div>
+								<div class="panel-footer">
+									
+								</div>
+							</div>
+							<!-- END PANEL WITH CONTROL CLASSES -->
+						
+					</div>
+
+				</div>
+				
+			</div>
+
+		</div>
+	</ui:define>
+</ui:composition>

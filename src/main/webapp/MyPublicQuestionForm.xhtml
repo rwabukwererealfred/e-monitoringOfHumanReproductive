@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<div class="page-content">
+
+			<ui:include src="/WEB-INF/topbar.xhtml" />
+
+			<ul class="breadcrumb">
+				<li><a href="#">Home</a></li>
+
+			</ul>
+			<div class="page-title">
+				<h3>
+					<span class="fa fa-arrow-circle-o-left">Public Question
+						Form</span>
+				</h3>
+			</div>
+			<div class="page-content-wrap">
+
+				<div class="row">
+					<h:form id="msgForm">
+						<p:messages showDetail="true" autoUpdate="true" closable="true" />
+					</h:form>
+
+					<div class="col-md-8">
+
+						<!-- START TIMELINE FILTER -->
+						<div class="panel panel-default">
+						
+							
+							<h:form>
+							<div class="panel-body mail">
+							
+								<table class="table datatable">
+									<thead>
+										<tr>
+										    <th>Question Category</th>
+											<th>Message</th>
+											<th>View Chat</th>
+											
+										</tr>
+									</thead>
+									<tbody>
+										<p:repeat var="one"
+											value="#{listController.MyPublicChatQuestionList(username)}">
+											<tr>
+												<td><h:panelGroup rendered="#{one.commonQuestion == null}">
+									 Other Question 
+									</h:panelGroup>
+									<h:panelGroup rendered="#{one.commonQuestion != null}">
+									#{one.commonQuestion.message}
+									</h:panelGroup></td>
+												<td>#{one.message}</td>
+												<td><h3><p:commandLink action="#{chatQuestionController.chatInPrivateForm(one)}" ajax="false">
+								<i class="fa fa-list"></i>
+								</p:commandLink></h3></td>
+												
+											</tr>
+										</p:repeat>
+
+
+									</tbody>
+								</table>
+								
+							</div>
+</h:form>
+						</div>
+						<!-- END TIMELINE FILTER -->
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+	</ui:define>
+</ui:composition>

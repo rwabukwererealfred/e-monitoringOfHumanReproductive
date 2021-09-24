@@ -1,0 +1,214 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<div class="page-content">
+
+			<ui:include src="/WEB-INF/topbar.xhtml" />
+			<h:form>
+						<f:websocket channel="push">
+								<f:ajax event="isLogin" render=":form" />
+							</f:websocket>
+						</h:form>
+			<h:form id="form" enctype="multipart/form-data">
+				<ul class="breadcrumb">
+					<li><a href="#">Home</a></li>
+
+				</ul>
+				<div class="page-title">
+					<h3>
+						<span class="fa fa-arrow-circle-o-left">Choose Question
+							Type</span>
+					</h3>
+				</div>
+				<div class="page-content-wrap">
+
+					<div class="row">
+						<div class="col-md-6">
+
+							<!-- START TIMELINE FILTER -->
+							<div class="panel panel-default">
+								<div class="panel-body">
+
+									<div class="form-horizontal">
+
+										<div>
+
+											<p:selectOneRadio style="text-align:center;"
+												value="#{registrationController.questionType}">
+												<f:selectItem itemLabel="Public Question" itemValue="Public" />
+
+												<f:selectItem itemLabel="Private Question"
+													itemValue="Private" />
+												<f:ajax  render="quest"/>
+											</p:selectOneRadio>
+
+										</div>
+
+
+									</div>
+								</div>
+							</div>
+							<!-- END TIMELINE FILTER -->
+
+						</div>
+
+					</div>
+					<p:messages showDetail="true" autoUpdate="true" closable="true" />
+					<h:panelGroup id="quest">
+						<h:panelGroup
+							rendered="#{registrationController.questionType == 'Private'}">
+
+
+							<div class="row">
+								<p:repeat var="one" value="#{listController.healthCareList()}">
+									<div class="col-md-3">
+										<!-- CONTACT ITEM -->
+										<div class="panel panel-default">
+											<div class="panel-body profile">
+												<div class="profile-image">
+													<img src="assets/images/users/no-image.jpg" alt="Nadia Ali" />
+												</div>
+												<div class="profile-data">
+													<div class="profile-data-name">#{one.firstName}
+														#{one.lastName}</div>
+													<div class="profile-data-title">#{one.title}</div>
+												</div>
+												<div class="profile-controls">
+												<h:panelGroup rendered="#{one.online == false}">
+												<span style="color:white;">Offline</span>
+													<a href="#" class="profile-control-left"><span
+														class="fa fa-info"></span></a> 
+												</h:panelGroup>
+												<h:panelGroup rendered="#{one.online == true}">
+												<span style="color:green;">Online</span>
+													<a href="#" class="profile-control-left" style="background-color: green;"><span
+														class="fa fa-info"></span></a> 
+												</h:panelGroup>
+												
+														<p:commandLink class="profile-control-right" action="#{chatQuestionController.privateQuestionForm(one)}"
+														ajax="false">
+														<span class="fa fa-phone"></span>
+														</p:commandLink>
+												</div>
+											</div>
+											<div class="panel-body">
+												<div class="contact-info">
+													<div class="row">
+														<div class="col-md-6">
+															<p>
+																<small>Mobile</small><br />(+250) #{one.phoneNumber}
+															</p>
+														</div>
+														<div class="col-md-6">
+															<p>
+																<small>Email</small><br />#{one.email}
+															</p>
+														</div>
+													</div>
+													<p>
+														<small>Experience</small><br />#{one.description}
+													</p>
+												</div>
+											</div>
+										</div>
+										<!-- END CONTACT ITEM -->
+									</div>
+								</p:repeat>
+							</div>
+						</h:panelGroup>
+						<h:panelGroup
+							rendered="#{registrationController.questionType == 'Public'}">
+							<div class="row">
+								<div class="col-md-8">
+
+									<!-- START TIMELINE FILTER -->
+									<div class="panel panel-default">
+										<div class="panel-body">
+
+											<div class="form-horizontal">
+
+												<div>
+
+													<div class="panel-body">
+
+														<div class="form-group">
+															<label class="col-md-3 col-xs-12 control-label">Question
+																Category</label>
+															<div class="col-md-9 col-xs-12">
+																<div class="input-group">
+																	<span class="input-group-addon"><span
+																		class="fa fa-pencil"></span></span>
+																	<h:panelGroup
+																		rendered="#{chatQuestionController.otherQuestion == ''}">
+																		<h:inputText style="color:black;"
+																			value="#{chatQuestionController.commonQuestion.message}"
+																			class="form-control" disabled="true" />
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{chatQuestionController.otherQuestion != ''}">
+																		<h:inputText style="color:black;"
+																			value="#{chatQuestionController.otherQuestion}"
+																			class="form-control" disabled="true" />
+																	</h:panelGroup>
+
+																</div>
+																<span class="help-block">Question Category</span>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 col-xs-12 control-label">File</label>
+															<div class="col-md-9 col-xs-12">
+																<div class="input-group">
+																	<p:fileUpload value="#{chatQuestionController.file}"
+																		mode="simple" label="File"/>
+
+
+																</div>
+																<span class="help-block">Attach Any File if there
+																	is any!</span>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-3 col-xs-12 control-label">Description</label>
+															<div class="col-md-9 col-xs-12">
+
+																<h:inputTextarea rows="8"
+																	class="form-control summernote_lite"
+																	value="#{chatQuestionController.chatQuestion.message}" required="true" 
+																	requiredMessage="Description required"/>
+
+																<span class="help-block">Write Description Of
+																	Question</span>
+
+															</div>
+														</div>
+													</div>
+													<div class="panel-footer">
+														<p:commandLink value="Send"
+															action="#{chatQuestionController.sentPubliQuestion()}"
+															class="btn btn-primary pull-right" ajax="false" />
+													</div>
+
+												</div>
+
+
+											</div>
+										</div>
+									</div>
+									<!-- END TIMELINE FILTER -->
+
+								</div>
+
+							</div>
+						</h:panelGroup>
+					</h:panelGroup>
+				</div>
+
+			</h:form>
+
+		</div>
+	</ui:define>
+</ui:composition>

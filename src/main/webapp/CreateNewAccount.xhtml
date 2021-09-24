@@ -1,0 +1,171 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<meta charset="utf-8" />
+
+	
+
+	<link rel="stylesheet" type="text/css" id="theme"
+		href="css/theme-default.css" />
+	<title>eMontoring System On Human Reproduction</title>
+
+</h:head>
+
+<h:body >
+	
+		 <div class="login-container" style="background-image:linear-gradient(rgba(255,255,255,0.1),rgba(255,255,255,0.3)),
+		  url('img/youngp.jpg'); background-repeat: no-repeat; background-size: 100%;">
+        	
+            <div class="login-box animated fadeInDown" style="margin-top: 70px;">
+            <h:form id="formMessage">
+        	<p:messages showDetail="true" autoUpdate="true" closable="true"/>
+        	</h:form>
+                <div><IMG src="img/logos.JPG" width="500"/> </div>
+                <div class="login-body" style="background-color: #4E5F5F; width: 500px;">
+                <h:form  class="form-horizontal" id="form">
+              <p:growl showDetail="true"/>
+                    <div class="login-title" style="color:black;">
+                     
+                    <strong>Create Account As
+                    <p:selectOneRadio style="text-align:center; color:white;" value="#{chatQuestionController.userRole}">
+												<f:selectItem itemLabel="Young Adult" itemValue="Young Adult" />
+
+												<f:selectItem itemLabel="Health Care"
+													itemValue="Health Care" />
+													<p:ajax update="pan"/>
+											</p:selectOneRadio>
+                    </strong></div>
+                   
+                   <h:panelGroup id="pan">
+                    	<h:panelGroup rendered="#{chatQuestionController.userRole =='Young Adult'}">
+                    
+                    <div class="form-group">
+                        <div class="col-md-12">
+                        <LABEL style="color:white;">First Name</LABEL>
+                             <p:inputText placeholder="First Name" class="form-control" value="#{authenticationController.youngAdult.firstName}"
+                              style="color:white; background-color:black;"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                        <LABEL style="color:white;">Last Name</LABEL>
+                            <p:inputText placeholder="Last Name" class="form-control" value="#{authenticationController.youngAdult.lastName}"
+                            style="color:white; background-color:black;"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                        <LABEL style="color:white;">Phone Number</LABEL>
+                             <p:inputText placeholder="Phone Number" class="form-control" value="#{authenticationController.youngAdult.phoneNumber}"
+                             style="color:white; background-color:black;"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                        <LABEL style="color:white;">Username</LABEL>
+                            <p:inputText  class="form-control" placeholder="Username" value="#{authenticationController.user.username}"
+                            style="color:white; background-color:black;"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                        <LABEL style="color:white;">Password</LABEL>
+                            <p:password class="form-control" placeholder="Password" value="#{authenticationController.user.password}"
+                            style="color:white; background-color:black;"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                        <LABEL style="color:white;">Retype-Password</LABEL>
+                            <p:password class="form-control" placeholder="Retype-Password" value="#{authenticationController.repassword}"
+                             style="color:white; background-color:black;"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                       
+                        <div class="col-md-12">
+                            <p:commandButton value="Create Account" class="btn btn-info btn-block" 
+                            actionListener="#{authenticationController.createAccountAsYoungAdult()}" update="form :formMessage" ajax="false"/>
+                        </div>
+                    </div>
+                    </h:panelGroup>
+                     <h:panelGroup rendered="#{chatQuestionController.userRole =='Health Care'}">
+                     <div class="form-group">
+                        <div class="col-md-12">
+                           <LABEL style="color:white;">National Id</LABEL>
+                           <p:inputText placeholder="National Id" class="form-control" value="#{authenticationController.nationalId}"
+                            style="color:white; background-color:black;"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                        <LABEL style="color:white;">Username</LABEL>
+                            <p:inputText  class="form-control" placeholder="Username" value="#{authenticationController.user.username}"
+                            style="color:white; background-color:black;"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <LABEL style="color:white;">Password</LABEL>
+                            <p:password class="form-control" placeholder="Password" value="#{authenticationController.user.password}"
+                            style="color:white; background-color:black;"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <LABEL style="color:white;">Retype-Password</LABEL>
+                            <p:password class="form-control" placeholder="Retype-Password" value ="#{authenticationController.repasswords}"
+                             style="color:white; background-color:black;"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                           
+                           <p:inputTextarea rows="5" class="form-control" value="#{authenticationController.description}"
+                            placeholder="Summary Experience" style="color:white; background-color:black;"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <p:commandButton value="Create Account" action="#{authenticationController.createAccountAsHealthCare()}"
+                             class="btn btn-info btn-block" update="form :formMessage" ajax="false"/>
+                        </div>
+                    </div>
+                    </h:panelGroup>
+                     </h:panelGroup>
+                    
+                    <div class="login-subtitle">
+                        Arleady have account? <a href="login.xhtml" style="color:white;" >Log In</a>
+                    </div>
+                    </h:form>
+                </div>
+                <div class="login-footer">
+                    <div class="pull-left">
+                        copy 2014 AppName
+                    </div>
+                    <div class="pull-right">
+                        <a href="#" style="color:black;">About</a> |
+                        <a href="#" style="color:black;">Privacy</a> |
+                        <a href="#" style="color:black;">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+	
+	
+</h:body>
+</html>

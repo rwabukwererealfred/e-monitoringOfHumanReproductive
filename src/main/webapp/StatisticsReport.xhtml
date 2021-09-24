@@ -1,0 +1,117 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<div class="page-content">
+
+			<ui:include src="/WEB-INF/topbar.xhtml" />
+			<ul class="breadcrumb">
+				<li><a>Home</a></li>
+				<li><a>UI Kits</a></li>
+				<li class="active">UI Panels</li>
+			</ul>
+			<!-- PAGE TITLE -->
+
+			<div class="page-title">
+				<h3>
+					<span class="fa fa-arrow-circle-o-left"></span>STATISTICS FORM
+				</h3>
+				<h:form id="messageform">
+					<p:messages showDetail="true" closable="true" autoUpdate="true" />
+				</h:form>
+			</div>
+
+			<div class="page-content-wrap">
+
+				 <h:form>
+				 <div class="panel panel-warning"
+						style="margin-left: 10px; heigth:100%;">
+						<div class="panel-body">
+				<div class="block">
+	<div class="wizard">
+
+                                    <ul>
+                                        <li>
+                                            <a href="#step-1">
+                                                <span class="stepNumber">1</span>
+                                                <span class="stepDesc">Young Adult<br /><small>Young adult statistics</small></span>
+                                            </a>
+                                        </li>
+                                        
+                                       
+                                    </ul>
+                                    <div id="step-1">   
+                                        <h4>Choose year</h4>
+                                       
+					
+							<div class="row">
+								<div class="col-md-4">
+									<h:selectOneMenu class="form-control" value="#{statisticsController.showStatistics}">
+										<f:selectItem itemLabel="Select Year"
+											noSelectionOption="true" />
+										<f:selectItem itemLabel="2020" itemValue="2020" />
+										<f:selectItem itemLabel="2021" itemValue="2021" />
+										<f:selectItem itemLabel="2022" itemValue="2022" />
+										<f:selectItem itemLabel="2023" itemValue="2023" />
+										<f:selectItem itemLabel="2024" itemValue="2024" />
+										<f:selectItem itemLabel="2025" itemValue="2025" />
+										<f:selectItem itemLabel="2026" itemValue="2026" />
+
+									</h:selectOneMenu>
+								</div>
+								<div class="col-md-2">
+									<p:commandLink class="btn btn-primary" actionListener="#{statisticsController.show()}" ajax="false" >
+										<i class="fa fa-search"></i>
+										<span>Show</span>
+										
+									</p:commandLink>
+								</div>
+							</div>
+
+                                    </div>
+                                                          
+                                                             
+
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                
+                                <h:panelGroup id="stat">
+					
+					<h:panelGroup
+						rendered="#{statisticsController.showStatistics !=''}" >
+						<div class="panel panel-warning" style="margin-left: 10px;">
+							<div class="panel-body">
+
+								<p:barChart type="bar" model="#{statisticsController.barModel}"
+									style="width: 20%; height: 80px;" />
+									
+									
+
+							</div>
+
+						</div>
+					</h:panelGroup>
+					<h:panelGroup
+						rendered="#{statisticsController.showStatistics ==''}" >
+						<div class="panel panel-warning" style="margin-left: 10px;">
+							<div class="panel-body">
+
+									 <p:barChart type="bar" model="#{statisticsController.model}"
+									style="width: 20%; height: 80px;" />
+
+							</div>
+
+						</div>
+					</h:panelGroup>
+					</h:panelGroup>
+                                </h:form>
+			</div>
+
+		</div>
+	</ui:define>
+</ui:composition>

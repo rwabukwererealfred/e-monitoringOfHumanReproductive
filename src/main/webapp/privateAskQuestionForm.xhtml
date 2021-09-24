@@ -1,0 +1,126 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<div class="page-content">
+
+			<ui:include src="/WEB-INF/topbar.xhtml" />
+			
+				<ul class="breadcrumb">
+					<li><a href="#">Home</a></li>
+
+				</ul>
+				<div class="page-title">
+					<h3>
+						<span class="fa fa-arrow-circle-o-left">Private Form</span>
+					</h3>
+				</div>
+				<div class="page-content-wrap">
+
+					<div class="row">
+					<h:form id="msgForm">
+					<p:messages showDetail="true" autoUpdate="true" closable="true"/>
+					</h:form>
+					
+						<div class="col-md-8">
+
+							<!-- START TIMELINE FILTER -->
+							<div class="panel panel-default">
+								<div class="panel-body">
+
+									<h:form id="form" enctype="multipart/form-data" class="form-horizontal">
+
+										<div>
+
+											<div class="panel-body">
+												<div class="form-group">
+													<label class="col-md-3 col-xs-12 control-label">Health
+														Care Person</label>
+													<div class="col-md-9 col-xs-12">
+														<div class="input-group">
+															<span class="input-group-addon"><span
+																class="fa fa-pencil"></span></span>
+															<h:inputText style="color:black;"
+																value="#{chatQuestionController.healthCare.firstName} #{chatQuestionController.healthCare.lastName}"
+																class="form-control" disabled="true" />
+														</div>
+														<span class="help-block">Health Care</span>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-md-3 col-xs-12 control-label">Question
+														Category</label>
+													<div class="col-md-9 col-xs-12">
+														<div class="input-group">
+															<span class="input-group-addon"><span
+																class="fa fa-pencil"></span></span>
+															<h:panelGroup
+																		rendered="#{chatQuestionController.otherQuestion == ''}">
+																		<h:inputText style="color:black;"
+																			value="#{chatQuestionController.commonQuestion.message}"
+																			class="form-control" disabled="true" />
+																	</h:panelGroup>
+																	<h:panelGroup
+																		rendered="#{chatQuestionController.otherQuestion != ''}">
+																		<h:inputText style="color:black;"
+																			value="#{chatQuestionController.otherQuestion}"
+																			class="form-control" disabled="true" />
+																	</h:panelGroup>
+														</div>
+														<span class="help-block">Question Category</span>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-md-3 col-xs-12 control-label">File</label>
+													<div class="col-md-9 col-xs-12">
+														<div class="input-group">
+															<p:fileUpload value="#{chatQuestionController.file2}"
+																		mode="simple" label="File"/>
+														</div>
+														<span class="help-block">Attach Any File if there
+															is any!</span>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-md-3 col-xs-12 control-label">Description</label>
+													<div class="col-md-9 col-xs-12">
+
+														<h:inputTextarea rows="8"
+															class="form-control summernote_lite"
+															value="#{chatQuestionController.chatQuestion.message}" required="true"
+															requiredMessage="Description Required"/>
+
+														<span class="help-block">Write Description Of
+															Question</span>
+
+													</div>
+												</div>
+											</div>
+											<div class="panel-footer">
+												<p:commandLink value="Send"
+													action="#{chatQuestionController.sentPrivateQuestion()}"
+													class="btn btn-primary pull-right" ajax="false"/>
+											</div>
+
+										</div>
+
+
+									</h:form>
+								</div>
+							</div>
+							<!-- END TIMELINE FILTER -->
+
+						</div>
+
+					</div>
+
+
+				</div>
+
+		
+
+		</div>
+	</ui:define>
+</ui:composition>

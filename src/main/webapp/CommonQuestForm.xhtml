@@ -1,0 +1,184 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<div class="page-content">
+
+			<ui:include src="/WEB-INF/topbar.xhtml" />
+			<h:form id="form">
+				<ul class="breadcrumb">
+					<li><a href="#">Home</a></li>
+					<li><a href="#">Question</a></li>
+					<li class="active">Dashboard</li>
+				</ul>
+				<!-- END BREADCRUMB -->
+
+				<!-- PAGE TITLE -->
+				<div class="page-content-wrap">
+				<div class="row" style="width:50%; display: block; margin: 0 auto;">
+				<div class="col-md-10">
+				<h:inputText class="form-control" a:placeholder="Search" style="height:40px; display: block; margin: 0 auto;"
+				value="#{listController.search}"/>
+				</div>
+				<div class="col-md-2">
+				<p:commandButton class="btn btn-primary" value="Search" style="height:40px;" 
+									action="#{listController.searchQuestion()}" ajax="false"/>
+				</div>
+				
+				</div>
+                    
+                    <!-- START WIDGETS -->                    
+                    <div class="row" style="margin-top:20px;">
+                        <div class="col-md-3">
+                            
+                            <!-- START WIDGET SLIDER -->
+                            <div class="widget widget-default widget-carousel">
+                                <div class="owl-carousel" id="owl-example">
+                                    <div>                                    
+                                        <div class="widget-title">PRIVATE CHAT</div>                                                                        
+                                        
+                                        <div class="widget-int">#{listController.MyPrivateChatQuestionList(username).size()}</div>
+                                    </div>
+                                    <div >                                    
+                                        <div class="widget-title">PUBLIC CHAT</div>
+                                       
+                                        <div class="widget-int">#{listController.MyPublicChatQuestionList(username).size()}</div>
+                                    </div>
+                                    <div>                                    
+                                        <div class="widget-title">TOTAL CHAT</div>
+                                       
+                                        <div class="widget-int">#{listController.MyPrivateChatQuestionList(username).size() + listController.MyPublicChatQuestionList(username).size()}  </div>
+                                    </div>
+                                </div>                            
+                                <div class="widget-controls">                                
+                                    <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+                                </div>                             
+                            </div>         
+                            <!-- END WIDGET SLIDER -->
+                            
+                        </div>
+                        <div class="col-md-3">
+                            
+                            <!-- START WIDGET MESSAGES -->
+                            <div class="widget widget-default widget-item-icon">
+                                <div class="widget-item-left">
+                                    <span class="fa fa-envelope"></span>
+                                </div>                             
+                                <div class="widget-data">
+                                    <div class="widget-int num-count">#{listController.findAllRepliedChat(username).size()}</div>
+                                    <div class="widget-title">Chat messages</div>
+                                    <div class="widget-subtitle">all your message replied</div>
+                                </div>      
+                                <div class="widget-controls">                                
+                                    <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+                                </div>
+                            </div>                            
+                            <!-- END WIDGET MESSAGES -->
+                            
+                        </div>
+                        <div class="col-md-3">
+                            
+                            <!-- START WIDGET REGISTRED -->
+                            <div class="widget widget-default widget-item-icon" onclick="location.href='CommonQuestForm.xhtml';">
+                                <div class="widget-item-left">
+                                    <span class="fa fa-user"></span>
+                                </div>
+                                <div class="widget-data">
+                                    <div class="widget-int num-count">#{listController.categories().size()}</div>
+                                    <div class="widget-title">Common Questions</div>
+                                    <div class="widget-subtitle">On the Site</div>
+                                </div>
+                                <div class="widget-controls">                                
+                                    <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+                                </div>                            
+                            </div>                            
+                            <!-- END WIDGET REGISTRED -->
+                            
+                        </div>
+                        <div class="col-md-3">
+                            
+                            <!-- START WIDGET CLOCK -->
+                            <div class="widget widget-info widget-padding-sm">
+                                <div class="widget-big-int plugin-clock">00:00</div>                            
+                                <div class="widget-subtitle plugin-date">Loading...</div>
+                                <div class="widget-controls">                                
+                                    <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="left" title="Remove Widget"><span class="fa fa-times"></span></a>
+                                </div>                            
+                                <div class="widget-buttons widget-c3">
+                                    <div class="col">
+                                        <a href="#"><span class="fa fa-clock-o"></span></a>
+                                    </div>
+                                    <div class="col">
+                                        <a href="#"><span class="fa fa-bell"></span></a>
+                                    </div>
+                                    <div class="col">
+                                        <a href="#"><span class="fa fa-calendar"></span></a>
+                                    </div>
+                                </div>                            
+                            </div>                        
+                            <!-- END WIDGET CLOCK -->
+                            
+                        </div>
+                    </div>
+                 
+                 
+                    
+                </div>
+				<div class="page-content-wrap">
+					
+					<div class="row">
+					
+					<p:repeat var="one" value="#{listController.commonQuestions}" id="l">
+						<div class="col-md-4">
+
+							<!-- START PRIMARY PANEL -->
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<h3 class="panel-title">#{one.message}</h3>
+								</div>
+								<div class="panel-body">
+								<p:scrollPanel style="height:150px; width:100%" mode="native">
+								<p:repeat var="desc" value="#{listController.descriptionList(one.id)}">
+									<p>#{desc.message}</p>
+								</p:repeat>	
+								</p:scrollPanel>
+								</div>
+								<div class="panel-footer">
+									
+									<h:commandButton class="btn btn-primary pull-right" value="Ask Question" 
+									actionListener="#{chatQuestionController.ChooseQuestionForm(one)}"/>
+								</div>
+							</div>
+
+						</div>
+						</p:repeat>
+						<div class="col-md-4">
+
+							<!-- START PRIMARY PANEL -->
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<h3 class="panel-title">OTHER</h3>
+								</div>
+								<div class="panel-body">
+								
+									<p>Here you can ask question which is not listed</p>
+								
+								</div>
+								<div class="panel-footer">
+									<button class="btn btn-default">Back</button>
+									
+									<h:commandButton class="btn btn-primary pull-right" value="Ask Question" 
+									actionListener="#{chatQuestionController.ChooseOtherQuestionForm()}"/>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+		</div>
+	</ui:define>
+</ui:composition>

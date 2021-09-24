@@ -1,0 +1,155 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<div class="page-content">
+
+			<ui:include src="/WEB-INF/topbar.xhtml" />
+			<ul class="breadcrumb">
+				<li><a href="#">Home</a></li>
+				<li><a href="#">UI Kits</a></li>
+				<li class="active">UI Panels</li>
+			</ul>
+			<!-- PAGE TITLE -->
+
+			<div class="page-title">
+				<h3>
+					<span class="fa fa-arrow-circle-o-left"></span>REPORT FORM
+				</h3>
+				<h:form id="messageform">
+					<p:messages showDetail="true" closable="true" autoUpdate="true" />
+				</h:form>
+			</div>
+
+			<div class="page-content-wrap">
+
+				<!-- START PANELS WITH CONTROLS -->
+				<div class="row">
+					<div class="col-md-6">
+						<h:form id="form">
+
+							<div class="panel panel-warning">
+								<div class="panel-heading">
+									<h3 class="panel-title">PRIVATE AND PUBLIC REPORT</h3>
+									<ul class="panel-controls">
+
+										<li><a href="#" class="panel-collapse"><span
+												class="fa fa-angle-down"></span></a></li>
+										<li><a href="#" class="panel-refresh"><span
+												class="fa fa-refresh"></span></a></li>
+
+									</ul>
+								</div>
+								<div class="panel-body">
+									<div class="form-group">
+										<p:commandLink class="btn btn-primary" style="width:45%;"
+											action="#{reportController.publicReport()}" ajax="false">
+											<i class="fa fa-print"></i>
+											<span>PUBLIC REPORT</span>
+										</p:commandLink>
+										<p:spacer width="10" />
+										<p:commandLink class="btn btn-primary" style="width:45%;"
+											action="#{reportController.report()}" ajax="false">
+											<i class="fa fa-print"></i>
+											<span>PRIVATE REPORT</span>
+										</p:commandLink>
+									</div>
+								</div>
+
+							</div>
+
+
+							<!-- END PANEL WITH CONTROL CLASSES -->
+						</h:form>
+					</div>
+					<div class="col-md-6">
+						<h:form id="form1">
+							<div class="panel panel-warning">
+								<div class="panel-heading">
+									<h3 class="panel-title">YOUNG ADULT REPORT</h3>
+									<ul class="panel-controls">
+
+										<li><a href="#" class="panel-collapse"><span
+												class="fa fa-angle-down"></span></a></li>
+										<li><a href="#" class="panel-refresh"><span
+												class="fa fa-refresh"></span></a></li>
+
+									</ul>
+								</div>
+								<div class="panel-body">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-md-5">
+												<h:inputText a:placeholder="From Date"  value="#{reportController.start}"
+													class="form-control datepicker">
+													<f:convertDateTime pattern="yyyy-MM-dd" />
+												</h:inputText>
+											</div>
+											<div class="col-md-5">
+												<h:inputText a:placeholder="End Date"
+													class="form-control datepicker" value="#{reportController.end}">
+													<f:convertDateTime pattern="yyyy-MM-dd" />
+												</h:inputText>
+											</div>
+											<div class="col-md-2">
+												<p:commandLink class="btn btn-primary" action="#{reportController.youngAdultReport()}" ajax="false">
+													<i class="fa fa-print"></i>
+
+												</p:commandLink>
+											</div>
+										</div>
+
+
+
+									</div>
+
+
+
+								</div>
+
+							</div>
+						</h:form>
+					</div>
+					<div class="col-md-6">
+						<h:form id="formss">
+
+							<div class="panel panel-warning">
+								<div class="panel-heading">
+									<h3 class="panel-title">HEALTH CARE REPORT</h3>
+									<ul class="panel-controls">
+
+										<li><a href="#" class="panel-collapse"><span
+												class="fa fa-angle-down"></span></a></li>
+										<li><a href="#" class="panel-refresh"><span
+												class="fa fa-refresh"></span></a></li>
+
+									</ul>
+								</div>
+								<div class="panel-body">
+									<div class="form-group" style="text-align: center;">
+										<p:commandLink class="btn btn-primary" style="width:60%;"
+											action="#{reportController.healthCareReport()}" ajax="false">
+											<i class="fa fa-print"></i>
+											<span>PRINT REPORT</span>
+										</p:commandLink>
+										<p:spacer width="10" />
+										
+									</div>
+								</div>
+
+							</div>
+
+
+							<!-- END PANEL WITH CONTROL CLASSES -->
+						</h:form>
+					</div>
+				</div>
+				
+			</div>
+
+		</div>
+	</ui:define>
+</ui:composition>

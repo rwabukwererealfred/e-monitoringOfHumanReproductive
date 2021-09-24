@@ -1,0 +1,108 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<div class="page-content">
+
+			<ui:include src="/WEB-INF/topbar.xhtml" />
+
+			<ul class="breadcrumb">
+				<li><a href="#">Home</a></li>
+
+			</ul>
+			<div class="page-title">
+				<h3>
+					<span class="fa fa-arrow-circle-o-left">Public Question
+						Form</span>
+				</h3>
+			</div>
+			<div class="page-content-wrap">
+
+				<div class="row">
+					<h:form id="msgForm">
+						<p:messages showDetail="true" autoUpdate="true" closable="true" />
+					</h:form>
+
+					<div class="col-md-8">
+
+						<!-- START TIMELINE FILTER -->
+						<div class="panel panel-default">
+						 <div class="panel-heading">
+                                                            
+                                <button class="btn btn-default"><span class="fa fa-trash-o"></span></button>                                                                    
+                                <div class="pull-right" style="width: 200px;">
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><span class="fa fa-calendar"></span></div>
+                                        <input class="form-control datepicker" type="text" data-orientation="left" placeholder="search"/>                                    
+                                    </div>
+                                </div>
+                            </div>
+							<div class="block">
+								<div class="list-group border-bottom">
+									<a href="#" class="list-group-item active"><span
+										class="fa fa-inbox"></span> Inbox <span
+										class="badge badge-success">3</span></a>
+								</div>
+							</div>
+							<h:form>
+							<div class="panel-body mail">
+							<p:repeat var="one" value="#{listController.publicQuestionList()}">
+								<p:commandLink action="#{chatQuestionController.chatInPrivateForm(one)}" ajax="false">
+								<div class="mail-item mail-unread mail-info">
+									<div class="mail-checkbox">
+										<SPAN class="fa fa-envelope"></SPAN>
+									</div>
+									
+									
+									
+									<div class="mail-user" ><SPAN style="color:#00BFFF;">#{one.youngAdult.firstName} #{one.youngAdult.lastName}</SPAN></div>
+									
+										
+									<h:panelGroup rendered="#{one.commonQuestion.message == null and one.read == true}">
+									
+									<div class="mail-text" >Question About: " Other Questions " </div>
+									
+									</h:panelGroup>
+									<h:panelGroup rendered="#{one.commonQuestion.message != null and one.read == true}">
+									<p:spacer width="300"/>
+									
+									<div class="mail-text" >Question About:  " #{one.commonQuestion.message}" </div>
+									<br/>
+									<br/>
+									</h:panelGroup>
+									<h:panelGroup rendered="#{one.commonQuestion.message == null and one.read == false}">
+									<p:spacer width="300"/>
+									<div>Question About: " Other Questions (unread)"</div>
+									</h:panelGroup>
+									<h:panelGroup rendered="#{one.commonQuestion.message != null and one.read == false}">
+									
+									<div>Question About:  " #{one.commonQuestion.message} (unread)" </div>
+									<br/>
+									<br/>
+									</h:panelGroup>
+									
+							
+									<div class="mail-date">#{one.createdDate}</div>
+									
+									<div style="color:black;">Question is: "#{one.message}"</div>
+								</div>
+								</p:commandLink>
+								</p:repeat>
+								
+							</div>
+							</h:form>
+
+						</div>
+						<!-- END TIMELINE FILTER -->
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+	</ui:define>
+</ui:composition>

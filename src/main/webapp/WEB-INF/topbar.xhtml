@@ -1,0 +1,67 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    
+    <h:form>
+								<f:websocket channel="push">
+									<f:ajax event="updatetopbar" render=":topBarform" />
+								</f:websocket>
+			</h:form>
+    
+    <h:form id="topBarform">
+                <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+                    <!-- TOGGLE NAVIGATION -->
+                    <li class="xn-icon-button">
+                        <a href="#" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+                    </li>
+                    <!-- END TOGGLE NAVIGATION -->
+                    <!-- SEARCH -->
+                    <li class="xn-search">
+                        <div role="form">
+                            <input type="text" name="search" placeholder="Search..."/>
+                        </div>
+                    </li>   
+                    <!-- END SEARCH -->
+                    <!-- SIGN OUT -->
+                    <li class="xn-icon-button pull-right" style="margin-right: 50px;">
+                        <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out">LOGOUT</span></a>                        
+                    </li> 
+                    <h:panelGroup rendered="#{authenticationController.userAuth.healthCare != null}">
+                    
+                    
+                     <li class="xn-icon-button pull-right">
+                        <a href="#"><span class="fa fa-comments"></span></a>
+                        <div class="informer informer-danger">#{requestController.privateReplyList(username).size()}</div>
+                        <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><span class="fa fa-comments"></span> Messages</h3>                                
+                                <div class="pull-right">
+                                    <span class="label label-danger">#{requestController.privateReplyList(username).size()} new</span>
+                                </div>
+                            </div>
+                            <div class="panel-body list-group list-group-contacts scroll" style="height: 200px;">
+                            <p:repeat var="one" value="#{requestController.privateReplyList(username)}">
+                                <p:commandLink class="list-group-item" action="#{chatQuestionController.chatInPrivateForm(one.chatQuestion)}" ajax="false">
+                                 <div class="list-group-status status-online"></div>
+                                  <img src="assets/images/users/no-image.jpg" alt="alpha"  class="pull-left"/>
+                                    <span class="contacts-title">#{one.user.username}</span>
+                                    <h:panelGroup rendered="#{one.message !=null}">
+                                    <p>#{one.message}</p>
+                                    </h:panelGroup>
+                                     <h:panelGroup rendered="#{one.message ==null}">
+                                    <p>File: #{one.file}</p>
+                                    </h:panelGroup>
+                                </p:commandLink>
+                               </p:repeat>
+                            </div>     
+                                                     
+                        </div>                        
+                    </li>
+                    </h:panelGroup>
+                </ul>
+                <!-- END X-NAVIGATION VERTICAL -->  
+    </h:form>
+    </ui:composition>

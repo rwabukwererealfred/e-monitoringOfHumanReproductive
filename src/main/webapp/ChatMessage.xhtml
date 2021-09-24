@@ -1,0 +1,302 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+
+
+		<div class="page-content">
+
+			<ui:include src="/WEB-INF/topbar.xhtml" />
+
+			<ul class="breadcrumb">
+				<li><a href="#">Home</a></li>
+				<li><a href="#">UI Kits</a></li>
+				<li class="active">UI Panels</li>
+			</ul>
+			<!-- START CONTENT FRAME -->
+			<div class="content-frame">
+				<!-- START CONTENT FRAME TOP -->
+				<div class="content-frame-top">
+					<div class="page-title">
+						<h2>
+							<span class="fa fa-comments"></span> Messages
+						</h2>
+					</div>
+					<div class="pull-right" >
+						<h:form>
+						<p:commandLink class="btn btn-danger" action="#{chatQuestionController.reflesh()}" ajax="false">
+						<span class="fa fa-book"></span> Refresh
+						</p:commandLink>
+						</h:form>
+						<button class="btn btn-default content-frame-right-toggle">
+							<span class="fa fa-bars"></span>
+						</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+
+
+						<div class=" content-frame-body-left">
+
+							<div class="panel push-up-10">
+								<div class="panel-body panel-body-search">
+
+									<div class="input-group">
+										<div class="input-group-btn">
+											<button class="btn btn-default" data-toggle="modal"
+												data-target="#modal_basic">
+												<span class="fa fa-upload"></span>
+											</button>
+
+										</div>
+										<h:form id="form">
+											<div class="input-group-btn">
+												<p:inputText class="form-control" style="width:90%;"
+													placeholder="Your message..."
+													value="#{requestController.reply.message}" />
+
+												<p:commandButton value="Send" class="btn btn-default"
+													action="#{requestController.createReplyQuestion()}"
+													ajax="false" />
+
+											</div>
+										</h:form>
+									</div>
+								</div>
+							</div>
+							<h:form id="websocketForm">
+								<f:websocket channel="pushed">
+									<p:ajax event="replyOnline" update="@all"/>
+								</f:websocket>
+								<f:websocket channel="push">
+									<p:ajax event="replyOnlinefile" update="@all" />
+								</f:websocket>
+							</h:form>
+
+
+						</div>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<h:form id="onlineForm">
+							<div class="container">
+
+								<div class="messaging">
+									<div class="inbox_msg">
+
+										<div class="mesgs"
+											style="background-image: url('img/wht.jpg'); background-repeat: no-repeat; background-size: 100%; height:">
+											<div class="msg_history">
+												<p:repeat var="one" id="table"
+													value="#{requestController.replyQuestionList()}">
+													<h:panelGroup
+														rendered="#{one.user.username != username and chatQuestionController.chatQuestionResponse.category == 'PUBLIC'
+											and one.message != null}">
+														<div class="incoming_msg">
+															<div class="incoming_msg_img">
+																<img src="assets/images/users/no-image.jpg" alt="alpha"
+																	style="border-radius: 20px;" />
+															</div>
+															<div class="received_msg">
+																<div class="received_withd_msg">
+																	<span class="time_date"
+																		style="color: white; float: right;">
+																		#{one.createdDate}</span>
+																	<h4 style="color: white;">#{one.user.username}</h4>
+
+																	<p>#{one.message}</p>
+
+																</div>
+															</div>
+														</div>
+													</h:panelGroup>
+													<h:panelGroup
+														rendered="#{one.user.username != username and chatQuestionController.chatQuestionResponse.category == 'PUBLIC'
+											and one.message == null}">
+														<div class="incoming_msg">
+															<div class="incoming_msg_img">
+																<img src="assets/images/users/no-image.jpg" alt="alpha"
+																	style="border-radius: 20px;" />
+															</div>
+															<div class="received_msg">
+																<div class="received_withd_msg">
+																	<span class="time_date"
+																		style="color: white; float: right;">
+																		#{one.createdDate}</span>
+																	<h4 style="color: white;">#{one.user.username}</h4>
+
+																	<p>
+																		<p:commandLink action="#{chatQuestionController.readReplyFile(one)}" ajax="false"
+																		style="width:50px; height:50px; color:blue;">
+																		<i class="fa fa-download"></i>
+																		<span>#{one.file}</span>
+																	</p:commandLink>
+																	</p>
+
+																</div>
+															</div>
+														</div>
+													</h:panelGroup>
+													<h:panelGroup
+														rendered="#{one.user.username != username and 
+											chatQuestionController.chatQuestionResponse.category == 'PRIVATE' and 
+											one.message != null}">
+														<div class="incoming_msg">
+															<div class="incoming_msg_img">
+																<img src="assets/images/users/no-image.jpg" alt="alpha"
+																	style="border-radius: 20px;" />
+															</div>
+															<div class="received_msg">
+																<div class="received_withd_msg">
+
+																	<p>#{one.message}</p>
+																	<span class="time_date" style="color: white;">
+																		#{one.createdDate}</span>
+																</div>
+															</div>
+														</div>
+													</h:panelGroup>
+													<h:panelGroup
+														rendered="#{one.user.username != username and 
+											chatQuestionController.chatQuestionResponse.category == 'PRIVATE' and 
+											one.message == null}">
+														<div class="incoming_msg">
+															<div class="incoming_msg_img">
+																<img src="assets/images/users/no-image.jpg" alt="alpha"
+																	style="border-radius: 20px;" />
+															</div>
+															<div class="received_msg">
+																<div class="received_withd_msg">
+																	<p>
+																		<p:commandLink action="#{chatQuestionController.readReplyFile(one)}" ajax="false"
+																		style="width:50px; height:50px; color:blue;">
+																		<i class="fa fa-download"></i>
+																		<span>#{one.file}</span>
+																	</p:commandLink>
+																	</p>
+																	<span class="time_date" style="color: white;">
+																		#{one.createdDate}</span>
+																</div>
+															</div>
+														</div>
+													</h:panelGroup>
+													<h:panelGroup
+														rendered="#{one.user.username == username and one.message != null}">
+														<div class="outgoing_msg">
+															<div class="sent_msg">
+																<p>#{one.message}</p>
+																<span class="time_date" style="color: white;">
+																	#{one.createdDate}</span>
+															</div>
+														</div>
+													</h:panelGroup>
+													<h:panelGroup
+														rendered="#{one.user.username == username and one.message == null}">
+														<div class="outgoing_msg">
+															<div class="sent_msg">
+
+																<p>
+																	<p:commandLink action="#{chatQuestionController.readReplyFile(one)}" ajax="false"
+																		style="width:50px; height:50px; color:white">
+																		<i class="fa fa-download"></i>
+																		<span>#{one.file}</span>
+																	</p:commandLink>
+																</p>
+																<span class="time_date" style="color: white;">
+																	#{one.createdDate}</span>
+															</div>
+														</div>
+													</h:panelGroup>
+												</p:repeat>
+											</div>
+
+										</div>
+										<div class="inbox_people">
+
+											<div class="inbox_chat">
+												<div class="chat_list active_chat">
+													<div class="chat_people">
+														<div class="chat_img">
+															<img src="assets/images/users/no-image.jpg" alt="alpha"
+																style="border-radius: 20px;" />
+														</div>
+														<div class="chat_ib">
+															<h5>
+															<h:panelGroup rendered="#{chatQuestionController.chatQuestionResponse.category == 'PRIVATE'}">
+															#{chatQuestionController.chatQuestionResponse.healthCare.firstName}
+																#{chatQuestionController.chatQuestionResponse.healthCare.lastName}
+															</h:panelGroup>
+															
+																<span class="chat_date">
+																	#{chatQuestionController.chatQuestionResponse.youngAdult.firstName}
+																#{chatQuestionController.chatQuestionResponse.youngAdult.lastName}</span>
+															</h5>
+															<p>
+																#{chatQuestionController.chatQuestionResponse.message}</p>
+																<p><h:panelGroup
+																	rendered="#{chatQuestionController.chatQuestionResponse.file != null}">
+																	<p:commandLink
+																		actionListener="#{chatQuestionController.readFile()}" ajax="false">
+																		<i class="fa fa-download"></i>
+																		<span>#{chatQuestionController.chatQuestionResponse.file}</span>
+																	</p:commandLink>
+																</h:panelGroup>
+															</p>
+														</div>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</h:form>
+
+						<div class="modal" id="modal_basic" tabindex="-1" role="dialog"
+							aria-labelledby="defModalHead" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+
+										<h4 class="modal-title" id="defModalHead">Upload File</h4>
+									</div>
+									<h:form enctype="multipart/form-data" id="imageForm">
+										<p:messages closable="true" autoUpdate="true"
+											showDetail="true" />
+										<div class="modal-body">
+											
+													<p:fileUpload value="#{chatQuestionController.file3}"
+														mode="simple" label="File" />
+											
+										</div>
+										<div class="modal-footer">
+											
+												<p:commandButton value="Send"
+														action="#{chatQuestionController.sendFile()}"
+														class="btn btn-default" ajax="false" update="@all">
+														</p:commandButton>
+											
+										</div>
+									</h:form>
+
+								</div>
+							</div>
+						</div>
+						
+						<!-- END CONTENT FRAME BODY -->
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+	</ui:define>
+
+</ui:composition>
